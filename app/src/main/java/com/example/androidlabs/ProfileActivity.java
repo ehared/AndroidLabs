@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText name;
     private ImageButton mImageButton;
     private static int REQUEST_IMAGE_CAPTURE = 1;
+    private Button mChatBtn;
 
 
     @Override
@@ -32,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         name = (EditText) findViewById(R.id.name);
         mImageButton = (ImageButton) findViewById(R.id.profileBtn);
-
+        mChatBtn = (Button) findViewById(R.id.chatBtn);
 
         Intent fromMain = getIntent();
         String userEmail = fromMain.getStringExtra("Email"); /* grab email passed from main activity */
@@ -46,6 +48,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
         });
+
+        mChatBtn.setOnClickListener(click -> {
+            Log.i(ACTIVITY_NAME, "starting chat activity");
+            Intent goToChat = new Intent (ProfileActivity.this, ChatRoomActivity.class);
+            startActivity(goToChat);
+        });
+
     }
 
     @Override

@@ -65,6 +65,13 @@
         android:id="@+id/buttonCaption"
         android:text="@string/clickpicbtn"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chatBtn"
+        android:text="@string/chat"
+        />
+
 
 
 </LinearLayout>
