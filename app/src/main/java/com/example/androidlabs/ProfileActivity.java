@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton mImageButton;
     private static int REQUEST_IMAGE_CAPTURE = 1;
     private Button mChatBtn;
-
+    private Button mWeatherBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +31,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Log.e(ACTIVITY_NAME, "In function: onCreate()");
 
-        email = (EditText) findViewById(R.id.email);
-        name = (EditText) findViewById(R.id.name);
-        mImageButton = (ImageButton) findViewById(R.id.profileBtn);
-        mChatBtn = (Button) findViewById(R.id.chatBtn);
+        email = findViewById(R.id.email);
+        name = findViewById(R.id.name);
+        mImageButton = findViewById(R.id.profileBtn);
+        mChatBtn = findViewById(R.id.chatBtn);
+        mWeatherBtn = findViewById(R.id.weatherBtn);
 
         Intent fromMain = getIntent();
         String userEmail = fromMain.getStringExtra("Email"); /* grab email passed from main activity */
@@ -55,6 +56,11 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(goToChat);
         });
 
+        mWeatherBtn.setOnClickListener(click -> {
+            Log.i(ACTIVITY_NAME, "starting weather forecast activity");
+            Intent goToWeather = new Intent (ProfileActivity.this, WeatherForecast.class);
+            startActivity(goToWeather);
+        });
     }
 
     @Override
