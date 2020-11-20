@@ -1,19 +1,29 @@
 package com.example.androidlabs;
 
-public class Message  {
+public class Message {
 
     private String msg;
-    private String msgType;
-    public Message (){}
+    private boolean isSent;
+    private long id;
 
-    public Message(String msg, String type){
-        this.msg = msg;
-        this.msgType = type;
+    public Message() {
     }
-    public String getMsg(){
+
+    public Message(String msg, boolean msgType, long id) {
+        this.msg = msg;
+        this.isSent = msgType;
+        this.id = id;
+    }
+
+    public String getMsg() {
         return this.msg;
     }
-    public String getMessageType() {
-        return this.msgType;
+
+    public boolean getMessageType() {
+        return this.isSent;
+    }
+
+    public long getId() {
+        return id;
     }
 }
