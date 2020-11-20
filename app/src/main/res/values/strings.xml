@@ -24,4 +24,9 @@
     <string name="chat">Chat</string>
     <string name="send">Send</string>
     <string name="receive">Receive</string>
+    <string name="weather">Weather</string>
+    <string name="CurrentTemp"> Current Temp:</string>
+    <string name="MinTemp"> Min Temp:</string>
+    <string name="MaxTemp"> Max Temp:</string>
+    <string name="UVRating"> UV:</string>
 </resources>
