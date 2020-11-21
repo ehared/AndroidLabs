@@ -29,4 +29,9 @@
     <string name="MinTemp"> Min Temp:</string>
     <string name="MaxTemp"> Max Temp:</string>
     <string name="UVRating"> UV:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="MessageHere">Message Here</string>
+    <string name="ID">ID=</string>
+    <string name="isMessage">Is a Send Message</string>
+    <string name="hide">HIDE</string>
 </resources>

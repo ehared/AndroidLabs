@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     protected final static String ACTIVITY_NAME = "ChatRoomActivity";
     private Cursor results;
+    private boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         sendBtn = (Button) findViewById(R.id.sendBtn);
         receiveBtn = (Button) findViewById(R.id.receiveBtn);
         msgField = (EditText) findViewById(R.id.messageBox);
-
+        isTablet = findViewById(R.id.fragmentLoc) != null; // check if frameLayout is loaded
         ListView chatList = (ListView) findViewById(R.id.chatList);
         loadDatabase();
         chatList.setAdapter(mAdapter = new myListAdapter());
@@ -62,7 +65,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         /* list listener */
         chatList.setOnItemClickListener((parent, view, position, id) -> {
 
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+           /* AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Do you want to delete this?").setMessage("The selected row is : " + position + "\nThe database id is: " + id)
                     .setPositiveButton("Yes", (click, args) -> {
                         deleteMessage(mAdapter.getItem(position));
@@ -71,7 +74,25 @@ public class ChatRoomActivity extends AppCompatActivity {
                     })
                     .setNegativeButton("No", (click, args) -> {
 
-                    }).create().show();
+                    }).create().show();*/
+
+           Bundle bundle = new Bundle();
+           bundle.putString("item", list.get(position).getMsg());
+           bundle.putInt("position", position);
+           bundle.putLong("id", id);
+           bundle.putBoolean("isSent", list.get(position).getMessageType());
+
+           if(isTablet){
+               DetailsFragment dFragment = new DetailsFragment();
+               dFragment.setArguments(bundle);
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLoc, dFragment).commit();
+           }
+           else{ // phone
+               Intent emptyActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
+               emptyActivity.putExtras(bundle);
+               startActivity(emptyActivity);
+
+           }
         });
     }
 
