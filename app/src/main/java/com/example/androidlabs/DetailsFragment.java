@@ -17,13 +17,13 @@ import android.widget.TextView;
 
 public class DetailsFragment extends Fragment {
 
-   private Bundle dataFromActivity;
-   private long id;
-   private AppCompatActivity parentActivity;
-   private Boolean isTablet = false;
+    private Bundle dataFromActivity;
+    private long id;
+    private AppCompatActivity parentActivity;
+    private Boolean isTablet;
 
-   @Override
-   public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         dataFromActivity = getArguments();
@@ -31,19 +31,24 @@ public class DetailsFragment extends Fragment {
 
         View result = inflater.inflate(R.layout.fragment_details, container, false);
 
-       TextView idView = (TextView) result.findViewById(R.id.idMsg);
-       idView.setText("ID=" + id);
+        TextView idView = (TextView) result.findViewById(R.id.idMsg);
+        idView.setText("ID=" + id);
 
-       TextView message = (TextView)result.findViewById(R.id.message);
-       message.setText("Message: " + dataFromActivity.getString("item"));
+        TextView message = (TextView) result.findViewById(R.id.message);
+        message.setText("Message: " + dataFromActivity.getString("item"));
 
-       CheckBox checkBox = (CheckBox)result.findViewById(R.id.checkBtn);
-       checkBox.setChecked(dataFromActivity.getBoolean("isSent"));
+        CheckBox checkBox = (CheckBox) result.findViewById(R.id.checkBtn);
+        checkBox.setChecked(dataFromActivity.getBoolean("isSent"));
 
-       Button hideButton = (Button) result.findViewById(R.id.hideBtn);
-       hideButton.setOnClickListener( click -> {
-           parentActivity.getSupportFragmentManager().beginTransaction().remove(this).commit();
-       });
+        Button hideButton = (Button) result.findViewById(R.id.hideBtn);
+
+        isTablet = dataFromActivity.getBoolean("isTablet");
+
+        hideButton.setOnClickListener(click -> {
+            parentActivity.getSupportFragmentManager().beginTransaction().remove(this).commit();
+            if (!isTablet)
+                parentActivity.finish();
+        });
 
         return result;
     }
@@ -52,10 +57,6 @@ public class DetailsFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        parentActivity = (AppCompatActivity)context;
-    }
-
-    public void setTablet(boolean tablet){
-       isTablet = tablet;
+        parentActivity = (AppCompatActivity) context;
     }
 }

@@ -36,6 +36,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     protected final static String ACTIVITY_NAME = "ChatRoomActivity";
     private Cursor results;
     private boolean isTablet;
+    private DetailsFragment dFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,34 +66,42 @@ public class ChatRoomActivity extends AppCompatActivity {
         /* list listener */
         chatList.setOnItemClickListener((parent, view, position, id) -> {
 
-           /* AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            Bundle bundle = new Bundle();
+            bundle.putString("item", list.get(position).getMsg());
+            bundle.putInt("position", position);
+            bundle.putLong("id", id);
+            bundle.putBoolean("isSent", list.get(position).getMessageType());
+
+            if (isTablet) {
+                dFragment = new DetailsFragment();
+                bundle.putBoolean("isTablet", true);
+                dFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLoc, dFragment).commit();
+            } else { // phone
+                Intent emptyActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
+                bundle.putBoolean("isTablet", false);
+                emptyActivity.putExtras(bundle);
+                startActivity(emptyActivity);
+
+            }
+        });
+
+        chatList.setOnItemLongClickListener((parent, view, position, id) -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Do you want to delete this?").setMessage("The selected row is : " + position + "\nThe database id is: " + id)
                     .setPositiveButton("Yes", (click, args) -> {
                         deleteMessage(mAdapter.getItem(position));
                         list.remove(position);
+                        if (isTablet && dFragment != null) {
+
+                            getSupportFragmentManager().beginTransaction().remove(dFragment).commit();
+                        }
                         mAdapter.notifyDataSetChanged();
                     })
                     .setNegativeButton("No", (click, args) -> {
 
-                    }).create().show();*/
-
-           Bundle bundle = new Bundle();
-           bundle.putString("item", list.get(position).getMsg());
-           bundle.putInt("position", position);
-           bundle.putLong("id", id);
-           bundle.putBoolean("isSent", list.get(position).getMessageType());
-
-           if(isTablet){
-               DetailsFragment dFragment = new DetailsFragment();
-               dFragment.setArguments(bundle);
-               getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLoc, dFragment).commit();
-           }
-           else{ // phone
-               Intent emptyActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
-               emptyActivity.putExtras(bundle);
-               startActivity(emptyActivity);
-
-           }
+                    }).create().show();
+            return true;
         });
     }
 
@@ -111,7 +120,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         long id = db.insert(DatabaseOpener.TABLE_NAME, null, cValues);
         Message msg = new Message(message, messageType, id);
 
-        Log.d(ACTIVITY_NAME, "new msg added ID: " + id + " message: " + message + " isSent: " + type );
+        Log.d(ACTIVITY_NAME, "new msg added ID: " + id + " message: " + message + " isSent: " + type);
 
         list.add(msg);
         mAdapter.notifyDataSetChanged();

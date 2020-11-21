@@ -15,10 +15,11 @@ public class EmptyActivity extends AppCompatActivity {
 
         DetailsFragment dFragment = new DetailsFragment();
         dFragment.setArguments(dataToPass);
-          getSupportFragmentManager()
-                  .beginTransaction()
-                  .replace(R.id.fragmentLoc, dFragment)
-                  .addToBackStack("AnyName")
-                  .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentLoc, dFragment)
+                .addToBackStack("AnyName")
+
+                .commit();
     }
 }
