@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/msg_item"
+        android:icon="@drawable/mail"
+        android:orderInCategory="100"
+        android:title="@string/mail"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/display_item"
+        android:icon="@drawable/display"
+        android:orderInCategory="200"
+        android:title="@string/Profile"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/contacts_item"
+        android:icon="@drawable/contacts"
+        android:orderInCategory="300"
+        android:title="@string/weather"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/settings_item"
+        android:icon="@drawable/settings"
+        android:orderInCategory="400"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+
+</menu>

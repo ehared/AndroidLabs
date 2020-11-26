@@ -24,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static int REQUEST_IMAGE_CAPTURE = 1;
     private Button mChatBtn;
     private Button mWeatherBtn;
+    private Button mToolbarBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class ProfileActivity extends AppCompatActivity {
         mImageButton = findViewById(R.id.profileBtn);
         mChatBtn = findViewById(R.id.chatBtn);
         mWeatherBtn = findViewById(R.id.weatherBtn);
+        mToolbarBtn = findViewById(R.id.toolbarBtn);
+
 
         Intent fromMain = getIntent();
         String userEmail = fromMain.getStringExtra("Email"); /* grab email passed from main activity */
@@ -60,6 +63,12 @@ public class ProfileActivity extends AppCompatActivity {
             Log.i(ACTIVITY_NAME, "starting weather forecast activity");
             Intent goToWeather = new Intent (ProfileActivity.this, WeatherForecast.class);
             startActivity(goToWeather);
+        });
+
+        mToolbarBtn.setOnClickListener(click-> {
+            Log.i(ACTIVITY_NAME, "starting test toolbar activity");
+            Intent goToToolber = new Intent(ProfileActivity.this, TestToolbar.class);
+            startActivityForResult(goToToolber, 100);
         });
     }
 
@@ -103,6 +112,10 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);
             Log.i(ACTIVITY_NAME, "In function onActivityResult: successful upload");
+        }
+
+        if(resultCode == 500){
+            finish();
         }
         Log.e(ACTIVITY_NAME, "In function: onActivityResult()");
     }
